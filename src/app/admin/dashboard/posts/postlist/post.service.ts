@@ -9,11 +9,14 @@ export class PostService {
 private posts:post[]=[]
 private postUpdate=new Subject<post[]>();
 
-
+getUpdateListner(){
+  return this.postUpdate.asObservable()
+}
   constructor() { }
   addPost(title:string,content:string,dateTime:any){
     const post:post={title:title,content:content,dateTime:new Date()};
     this.posts.push(post);
+    this.postUpdate.next([...this.posts])
   }
   getAll(){
     return [...this.posts]
